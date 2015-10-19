@@ -1,28 +1,30 @@
-$( document ).ready(function() {
+	var isLogged = false;
+	alert("Jake");
+	/**
+	 * Method used to log into the application
+	 */
 
-    var isLogged = false;
-	$(document).on("pageinit", "#loginForm", function () {
-	    $("#form1").on("submit", function (event) {
-	    	alert("ll");
-	        event.preventDefault();
-	        $.ajax({
-	            type: "GET",
-	            url: "http://www.karsv.com/login.php",
-	            data: $("#form1").serialize(),
-	            error:function(jqXHR,textStatus,errorThrown){
-	            	alert(" server error " + textStatus + ":" + errorThrown)
-            	},
-	            success: function (data) {
-	                console.log(data);
-	                if (data.match('successbully')) {
-	                    isLogged = true;
-	                    //$.mobile.changePage("#home");
-	                    alert("SUCCESS");
-	                } else {
-	                    alert("You entered the wrong username or password. Please try again.");
-	                }
+	$(document).on("submit", "#form1", function(event) {
+
+	    alert("submit happened");
+	    event.preventDefault();
+	    $.ajax({
+	        type: "POST",
+	        url: "http://www.karsv.com/login.php",
+	        data: $(this).serialize(),
+	        error: function(jqXHR, textStatus, errorThrown) {
+	            alert(" server error " + textStatus + ":" + errorThrown)
+	        },
+	        success: function(data) {
+	            alert(data);
+	            if(data.match('successbully')) {
+	                isLogged = true;
+	                alert("SUCCESS");
+	                $.mobile.changePage("#home");
 	            }
-	        });
+	            else {
+	                alert("You entered the wrong username or password. Please try again.");
+	            }
+	        }
 	    });
 	});
-});
